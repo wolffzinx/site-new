@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UFT-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Movie</title>
+    <link rel="stylesheet" href="style.css" />
+    <meta name="keywords" content="site de filmes, movie indicator, barbie, oppenheimer, besouro azul, cenas barbie">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=League+Spartan:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <!--<link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>-->
+</head>
+<body>
+    <div  class= "nome">
+        <!-- logo -->
+        <div class = "logo">
+            <div class = "container">
+                <p>Movie<span>Indicator.</span></p>
+            </div>
+        </div>
+        <form action="#" method="post" >
+            <input type="text" name="pesquisa" placeholder="Filme..." id="search" required />
+            
+        </form>
+    </div>
+    <div class="lista">
+    
+        <!-- <div class="item">
+            <img src="https://m.media-amazon.com/images/M/MV5BOTY4YjI2N2MtYmFlMC00ZjcyLTg3YjEtMDQyM2ZjYzQ5YWFkXkEyXkFqcGdeQXVyMTQxNzMzNDI@._V1_SX300.jpg" alt="">
+            <h2>Batman Begins</h2>
+        </div>
+        <div class="item">
+            <img src="https://m.media-amazon.com/images/M/MV5BYThjYzcyYzItNTVjNy00NDk0LTgwMWQtYjMwNmNlNWJhMzMyXkEyXkFqcGdeQXVyMTQxNzMzNDI@._V1_SX300.jpg" alt="">
+            <h2>Batman v Superman: Dawn of Justice</h2>
+        </div>-->
+    </div>
+    <p class="titulo">Sobre Nós <span>:</span></p>
+    <div class="txt">
+        <p>
+            Bem-vindo ao<span> Movie Indicator</span>, o seu guia definitivo para o fascinante mundo do cinema! Se você é um amante de filmes, você veio ao lugar certo.
+
+            Em nosso site, reunimos uma extensa coleção de filmes dos mais diversos gêneros, desde clássicos atemporais até as produções mais modernas e emocionantes. Nossa equipe de especialistas está sempre empenhada em trazer análises detalhadas e imparciais, garantindo que você faça escolhas informadas antes de apertar o play.
+
+            Aqui no Movie Indicator, a experiência do usuário é a nossa prioridade. Navegue facilmente por nossa interface intuitiva para encontrar listas de filmes por gênero, diretor, atores ou até mesmo descobrir filmes semelhantes a suas obras favoritas. Além disso, nossa classificação exclusiva fornece uma avaliação precisa sobre a qualidade e a relevância de cada filme, permitindo que você encontre rapidamente os melhores títulos para assistir.
+
+            Se você está procurando uma noite de cinema descontraída com a família, uma aventura épica para mergulhar, ou até mesmo uma pérola cinematográfica que ainda não conhece, o Movie Indicator é o seu aliado confiável. Estamos comprometidos em facilitar suas escolhas e tornar sua jornada no mundo do cinema mais envolvente e prazerosa.
+
+            Então, não perca mais tempo! Explore o Movie Indicator e deixe-se envolver pelas melhores histórias, atuações memoráveis e uma experiência cinematográfica incomparável. Deixe-nos ser a bússola que o guia para os melhores filmes e torne cada sessão um momento único e inesquecível. Seja bem-vindo ao Movie Indicator, o seu parceiro essencial para desvendar os tesouros do cinema!
+        </p>
+    </div>
+    <footer>  
+        <div class="container2">
+            <div class="row">
+                <div class="col">
+                  <h4>Contato</h4>
+                  <ul>   
+                    <li><a href="#">Email: movieindicator@gmail.com</a></li>  
+                    <li><a href="#">(51) 9 9861-1390</a></li>
+                    
+                    </ul>
+                </div>
+            <div class="col">   
+                <h4>Redes Sociais</h4>  
+                <ul>   
+                <li><a href="#">Facebook</a></li>  
+                <li><a href="#">Twitter</a></li>
+                <li><a href="#">Instagram</a></li>
+                </ul>
+            </div>
+    
+            <div class="col"> 
+                <h4>Links Úteis</h4>
+                    <ul>
+                    <li><a href="#">Política de Privacidade</a></li>      
+                    <li><a href="#">Termos de Serviço</a></li>      
+                    <li><a href="#">FAQ</a></li>
+                    </ul>   
+            </div>   
+    </footer>
+    <script>
+        const apiKey = '8fa8be48';
+        const frmPesquisa = document.querySelector("form");
+
+        frmPesquisa.onsubmit= (ev) => {
+            ev.preventDefault();
+            
+            const pesquisa = ev.target.pesquisa.value;
+
+            if(pesquisa ==""){
+                alert('Preencha o campo!')
+                return;
+            }
+
+            fetch (`https://www.omdbapi.com/?s=${pesquisa}&apikey=${apiKey}`) 
+                .then(result => result.json())
+                .then(json => carregaLista(json));
+        }
+
+        const carregaLista = (json) => {
+            const lista = document.querySelector("div.lista");
+            lista.innerHTML = "";
+
+            console.log(json.Response == 'false')
+
+            if (json.Response == 'false'){
+                alert('Nenhum filme encontrado!')
+                return
+            }
+
+            json.Search.forEach(element => {
+
+                let item = document.createElement("div");
+                item.classList.add("item");
+
+                item.innerHTML = `<img src="${element.Poster}" /><h2>${element.Title}</h2>`
+
+                lista.appendChild(item);
+            });
+        }
+    </script>     
+</body>
+</html>
